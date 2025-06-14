@@ -4,3 +4,8 @@ node_modules
 
 /generated/prisma
 /.env
+
+/readme.txt
+/service.txt
+/controller.txt
+/routes.txt
