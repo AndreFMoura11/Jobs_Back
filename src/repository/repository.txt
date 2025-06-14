@@ -1,0 +1,52 @@
+REPOSITORY-------------------
+|||||||||||||||||||||||||||||
+
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
+
+Usar essa biblioteca 
+
+
+| Método                    | O que faz                       |
+| ------------------------- | ------------------------------- |
+| `findMany()`              | Buscar todos                    |
+| `findUnique()`            | Buscar um só (por chave única)  |
+| `findFirst()`             | Buscar o primeiro que encontrar |
+| `create({ data })`        | Criar um registro               |
+| `update({ where, data })` | Atualizar                       |
+| `delete({ where })`       | Deletar                         |
+
+
+
+class vagaRepository{
+    async findMany(){
+        return prisma.vaga.findMany();
+    }
+
+
+    // LISTAR ESPECIFICO
+    async findUnique(id){
+        return prisma.vaga.findUnique({where:{id:Number(id)}})
+    }
+    
+    // CRIAR 
+    async create(data){
+        return prisma.vaga.create({data})
+    }
+
+    // ATUALIZAR
+    async update(id, data){
+        return prisma.vaga.update({ where: Number(id)})
+    }
+    
+    // DELETAR
+    async delete(id){
+        return prisma.vaga.delete({where:{ id:Number(id)} })
+    }
+
+}
+
+
+
+
+

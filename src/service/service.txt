@@ -1,0 +1,49 @@
+SERVICE -------------------
+|||||||||||||||||||||||||||||
+
+
+const vagaRepository = require("..repository/vaga.repository");
+
+pegar o crud tecnico 
+
+
+criar class e chamar contructor 
+
+class VagaService{
+    constructor(){
+        
+    }
+}
+
+
+Aqui ficam as regras de Negocio com o CRUD tecnico vindo do Repository
+
+
+O que são regras de negócio?
+São as regras e lógicas que definem como um sistema deve se comportar de acordo com as necessidades do negócio. Elas garantem que a aplicação siga as políticas, normas e processos da organização.
+
+Exemplos:
+
+Validações complexas ---------
+Um usuário só pode cancelar um pedido dentro de 24 horas após a compra.
+Um produto só pode ser vendido se estiver em estoque.
+
+Fluxos condicionais ----------
+Se um cliente tem mais de 5 compras, ele vira "Premium" e ganha 10% de desconto.
+Se o pagamento for via PIX, aplicar 5% de desconto.
+
+Regras de cálculo ------------
+Cálculo de impostos com base no tipo de produto e localização do cliente.
+Cálculo de frete com base no peso e distância.
+
+Restrições temporais ---------
+Horário de funcionamento do sistema de atendimento (ex: suporte só das 8h às 18h).
+Promoção válida apenas no mês de dezembro.
+
+Regras de segurança e compliance ------------
+Dados sensíveis (como CPF) só podem ser acessados por departamentos específicos.
+Transações acima de R$ 10.000 devem ser aprovadas por um supervisor.
+
+Regras de integração -----------------
+Se um pedido for cancelado, enviar um e-mail automático para o cliente.
+Se o estoque chegar a zero, notificar o fornecedor.
