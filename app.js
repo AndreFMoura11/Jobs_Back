@@ -1,48 +1,24 @@
 import express from "express";
-import vagaRoutes from "./src/routes/vaga.routes.js"
+import cors from "cors";
+import vagaRoutes from "./src/routes/vaga.routes.js";
+import morgan from 'morgan';
 
-const express = require('express');
-const cors = require('cors');
-//const errorHandler = require('./middlewares/errorHandler') midddware global de erros
-const vagaController = require("./src/controller/vaga.controller.js")
+
+
+
+
 const app = express();
 
-
 // middlewares globais
-app.use(cors());// permite requisições de outros domínios
+app.use(cors()); // permite requisições de outros domínios
 app.use(express.json());
+app.use(morgan('dev')); // a ordem importa ficar depois de criar as rotas
 
 // ROTAS
-
-app.use("/vagas",vagaRoutes); //// Ex: rota POST /vagas ou GET /vagas/:id
-//app.use(erroHandler); // middleware de erro
+app.use("/vagas", vagaRoutes); //// Ex: rota POST /vagas ou GET /vagas/:id
+// app.use(errorHandler); // descomente se criar um middleware de erro
 
 export default app; // exporta a aplicação para ser usada no server.js
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*
 APP-----------

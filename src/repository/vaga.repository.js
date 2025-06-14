@@ -1,48 +1,29 @@
-import VagaRepository from '../repositories/vaga.repository.js';
+import { prisma } from "../database/prisma.js";
 
-class VagaService {
-
-  // CRIAR
-  async createVaga(data) {
-    const existingVaga = await VagaRepository.findByTitle(data.title); // nao tem filtro (data.title); 
-    if (existingVaga) {
-      throw new Error("Vaga já existe!");
-    }
-    const vaga = await VagaRepository.create(data); // nao pode ser entre {}
-    return vaga;
+class VagaRepository {
+  async create(data) {
+    return await prisma.vaga.create(data);
   }
 
-  // LISTAR TODAS
-  async listarVagas() {
-    return await VagaRepository.findMany();
+  async findMany(options) {
+    return await prisma.vaga.findMany(options);
   }
 
-  // LISTAR POR TÍTULO
-  async listarVagaPorTitulo(title) {
-    const vaga = await VagaRepository.findByTitle(title);
-    if (!vaga) {
-      throw new Error("Vaga não encontrada!");
-    }
-    return vaga;
+  async findFirst(options) {
+    return await prisma.vaga.findFirst(options);
   }
 
-  // ATUALIZAR
-  async updateVaga(id, data) {
-    const existing = await VagaRepository.findUnique(id);
-    if (!existing) {
-      throw new Error("Vaga não encontrada para atualizar");
-    }
-    return await VagaRepository.update(id, data);
+  async findUnique(options) {
+    return await prisma.vaga.findUnique(options);
   }
 
-  // DELETAR
-  async deletarVaga(id) {
-    const existing = await VagaRepository.findUnique(id); // deletar precisa receber o id 
-    if (!existing) {
-      throw new Error("Vaga não encontrada para deletar");
-    }
-    return await VagaRepository.delete(id);
+  async update(options) {
+    return await prisma.vaga.update(options);
+  }
+
+  async delete(options) {
+    return await prisma.vaga.delete(options);
   }
 }
 
-export default new VagaService();
+export default new VagaRepository();

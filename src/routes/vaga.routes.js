@@ -1,11 +1,12 @@
-import express from "express"
-import vagaController from "../controller/vaga.controller.js"
+import express from "express";
+import vagaController from "../controller/vaga.controller.js";
 
 const router = express.Router();
 
-router.post('/', vagaController.create);
-router.get('/', vagaController.listarvagas);
-router.get('/title', vagaController.listarVagasTitles);
-router.delete('/', vagaController.delete);
+router.post("/", vagaController.create);                // POST /vagas
+router.get("/", vagaController.listarTodas);            // GET /vagas
+router.get("/busca", vagaController.listarPorTitulo);   // GET /vagas/busca?title=...
+router.put("/:id", vagaController.atualizar);           // PUT /vagas/:id
+router.delete("/:id", vagaController.deletar);          // DELETE /vagas/:id
 
-export default router;  
+export default router;

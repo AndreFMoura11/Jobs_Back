@@ -1,93 +1,55 @@
-import VagaRepository from '../repositories/vaga.repository.js';
-import Vaga from '../models/vaga.model.js';
-import bycrypt from 'bcrypt';
+import VagaRepository from "../repository/vaga.repository.js";
 
-
-
-// Erros customizados (crie um arquivo errors.js)
-
-
-
-
-
-// --- Métodos com REGRAS DE NEGÓCIO ---
-class VagaService{
-
-  // Criar 
+class VagaService {
   async createVaga(data) {
-    const existingVaga = await VagaRepository.listarVagas({
-      where: { title:data.title } // puxar do data.title qual ?   
+    const existingVaga = await VagaRepository.findFirst({ 
+      where: { title: data.title }
     });
 
-    if (existingVaga){
-      throw new Error('Vaga ja Existe!'); // throw joga no cath e o new chama o constructor do Error
-
+    if (existingVaga) {
+      throw new Error("Vaga já existe!");
     }
 
-    const vaga = await VagaRepository.createVaga({data}) // usar o memtodo do CRUD tecnico prisma , jogar para variavel data 
-    return vaga; // Retorna os dados da vaga
+    return await VagaRepository.create({ data });
   }
 
-
-  // Listar todas as vagas 
-  async listarVagas(){
-    const vagas = await VagaRepository.listarVagas()
-    return vagas;
-  } 
-  
-
-  // Listar por Titles 
-  async listarVagasTitles(data){
-    
-    const vaga = await VagaRepository.listarVagasTitles({
-      where: {title}
-    })
-
-    // Talvez precise colocar um if para erro ou swint case
-
-    return vaga;
+  async listarTodasVagas() {
+    return await VagaRepository.findMany();
   }
 
-  // Update 
-  async UpdateVagas(data){
-    const existingVagas = await VagaRepository.listarVagasTitles({
-      where:{title:data.title}
-    })
+  async listarVagasPorTitulo(title) {
+    if (!title) throw new Error("Campo 'title' obrigatório");
+    return await VagaRepository.findMany({
+      where: { title: { contains: title } }
+    });
+  }
 
-    if(existingVagas){
-      throw new Error("Vaga Ja Existe!")
+  async atualizarVaga(id, data) {
+    if (data.title) {
+      const existing = await VagaRepository.findFirst({
+        where: {
+          title: data.title,
+          NOT: { id }
+        }
+      });
+      if (existing) throw new Error("Já existe uma vaga com esse título!");
     }
 
-    const vaga = await VagaRepository.update({
-      where:{id:data.id},
-      data:data
-    })
-    return vaga;
+    return await VagaRepository.update({
+      where: { id },
+      data
+    });
   }
 
-  // Deletar
-  async deletarVaga(data){
-    const existingVagas = await Vaga.deletarVaga({
-      where:{id:data.id},
-      data:data
-    })
-    if(!existingVagas){
-      throw new Error("Vaga Não Existe!")
-    }
-    return existingVagas;
+  async deletarVaga(id) {
+    const vaga = await VagaRepository.findUnique({ where: { id } });
+    if (!vaga) throw new Error("Vaga não encontrada!");
+    return await VagaRepository.delete({ where: { id } });
   }
-
-
-
-
-
-
-    
-
-
-
-
 }
+
+export default new VagaService();
+
 
 
 /*
